@@ -1,0 +1,71 @@
+#include <iostream> #include <cstring> 
+using namespace std; 
+ 
+struct TrieNode 
+{ 
+    TrieNode* children[26]; 
+    bool isEnd; 
+ 
+    TrieNode() 
+    { 
+        for(int i = 0; i < 26; i++)             children[i] = NULL; 
+        isEnd = false; 
+    } 
+}; 
+ 
+void insert(TrieNode* root, string key) 
+{ 
+    TrieNode* current = root; 
+ 
+    for(int i = 0; i < key.length(); i++) 
+    { 
+        char ch = tolower(key[i]); 
+        int index = ch - 'a'; 
+ 
+        if(current->children[index] == NULL) 
+            current->children[index] = new TrieNode(); 
+ 
+        current = current->children[index]; 
+    } 
+ 
+    current->isEnd = true; 
+} 
+ 
+bool search(TrieNode* root, string key) 
+{ 
+    TrieNode* current = root; 
+ 
+    for(int i = 0; i < key.length(); i++) 
+    { 
+        char ch = tolower(key[i]); 
+        int index = ch - 'a'; 
+ 
+        if(current->children[index] == NULL)             return false; 
+ 
+        current = current->children[index]; 
+    } 
+ 
+    return (current != NULL && current->isEnd); } 
+ 
+int main() 
+{ 
+    TrieNode* root = new TrieNode(); 
+ 
+    char keys[][20] = { 
+        "and","bat","ball","book","cot","cotton", 
+        "internet","interview","joy","job", 
+        "King","Lion","man","mango","manage" 
+    }; 
+ 
+    int n = sizeof(keys)/sizeof(keys[0]); 
+ 
+    for(int i = 0; i < n; i++) 
+        insert(root, keys[i]); 
+ 
+    string word;     cout << "Enter word to search: ";     cin >> word; 
+ 
+    if(search(root, word))         cout << "Word Found in Trie";     else 
+        cout << "Word Not Found"; 
+ 
+    return 0; 
+} 
