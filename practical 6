@@ -1,0 +1,64 @@
+:#include<stdio.h>
+#include<limits.h> 
+ 
+#defineMAX10 
+ 
+ 
+//Functiontofindvertexwithminimumdistance int 
+minDistance(int dist[], int visited[], int n) { 
+intmin=INT_MAX,min_index; 
+ 
+ 
+for(intv=0;v<n;v++){ if(visited[v]==0&&dist[v]<=min){ min = 
+dist[v]; 
+min_index=v; 
+} 
+} 
+returnmin_index; 
+} 
+ 
+for(inti=0;i<n;i++){ 
+dist[i]=INT_MAX; 
+visited[i] = 0; 
+} 
+ 
+ 
+dist[source]=0; 
+ 
+ 
+for(intcount=0;count<n-1;count++){ int u 
+= minDistance(dist, visited, n); visited[u] = 1; 
+ 
+for(intv=0;v<n;v++){ if(!visited[v]&&graph[u][v]&&dist[u] 
+!= INT_MAX&& 
+dist[u]+graph[u][v]<dist[v]){ 
+ 
+ 
+dist[v]=dist[u]+graph[u][v]; 
+} 
+} 
+} 
+ 
+ 
+printf("\nShortestdistancesfromsource%d:\n",source); for 
+(int i = 0; i<n; i++) printf("To%d=%d\n",i,dist[i]); 
+intmain(){ 
+ 
+ 
+intn,source; 
+intgraph[MAX][MAX]; 
+ 
+ 
+printf("Enternumberofintersections:"); scanf("%d",&n); 
+ 
+printf("Enteradjacencymatrix(traveldistances):\n"); for 
+(int i = 0; i<n; i++) for (int j = 0; j<n; j++)scanf("%d",&graph[i][j]); 
+ 
+printf("Entersourceintersection(0to%d):",n-1); scanf("%d",&source); 
+ 
+dijkstra(graph,n,source); 
+ 
+ 
+return0; 
+} 
+
